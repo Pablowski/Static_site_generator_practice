@@ -77,3 +77,22 @@ the **same** even with inline stuff
         html,
         "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
     )
+
+class Test_extract_title(unittest.TestCase):
+
+    def test_extract_title(self):
+        self.assertEqual(extract_title("# Hello"), "Hello")
+    
+    def test_extract_title_with_whitespace(self):
+        self.assertEqual(extract_title("#   Hello   "), "Hello")
+
+    def test_extract_title_with_other_blocks(self):
+        self.assertEqual(extract_title("## Not this\n# This one\nparagraph"), "This one")
+
+    def test_no_h1_raises(self):
+        with self.assertRaises(ValueError):
+            extract_title("## Not an h1")
+
+    def test_no_header_raises(self):
+        with self.assertRaises(ValueError):
+            extract_title("just a paragraph")

@@ -1,8 +1,10 @@
 from textnode import *
+from block_markdown import *
+from generate_page import *
+from copystatic import copy_directory
 
 def main():
-    node = TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
-    
-    print(node)
-    
+    copy_directory("static", "public")
+    generate_pages_recursive("content", "template.html", "public")
+
 main()
